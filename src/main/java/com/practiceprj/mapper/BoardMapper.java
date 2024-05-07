@@ -44,4 +44,18 @@ public interface BoardMapper {
             where id = #{id}
             """)
     void deleteBoard(Integer id);
+
+    @Select("""
+            select *
+            from board
+            order by id desc
+            limit #{offSet} , 10
+            """)
+    List<Board> listBoardPaging(int offSet);
+
+    @Select("""
+            select count(*)
+            from board
+            """)
+    int totalCount();
 }

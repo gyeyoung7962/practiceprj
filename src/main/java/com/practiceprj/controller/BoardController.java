@@ -9,9 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/board")
@@ -21,12 +23,12 @@ public class BoardController {
     private final BoardService service;
 
     @GetMapping("/write")
-    public void getWrite(){
+    public void getWrite() {
 
     }
 
     @PostMapping("/write")
-    public String postWrite(Board board, RedirectAttributes rttr){
+    public String postWrite(Board board, RedirectAttributes rttr) {
 
         service.writeBoard(board);
 
@@ -36,15 +38,20 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public void getList(Model model){
+    public void getList(@RequestParam(name = "page", defaultValue = "1") Integer page, Model model) {
 
-        List<Board> list = service.listBoard();
+//        if (page == null || page < 1) {
+//            page = 1;
+//        }
+//        List<Board> list = service.listBoard();
+//
+//        model.addAttribute("list", list);
 
-        model.addAttribute("list", list);
+        model.addAllAttributes(service.listBoardPaging(page));
     }
 
     @GetMapping("/read")
-    public String read(Integer id, Model model){
+    public String read(Integer id, Model model) {
 
         Board board = service.readBoard(id);
 
@@ -54,22 +61,22 @@ public class BoardController {
     }
 
     @GetMapping("/modify")
-    public void getModify(Integer id, Model model){
+    public void getModify(Integer id, Model model) {
         Board board = service.readBoard(id);
 
         model.addAttribute("board", board);
     }
 
     @PostMapping("/modify")
-    public String postModify(Board board){
+    public String postModify(Board board) {
 
         service.updateBoard(board);
 
-        return "redirect:/board/read?id="+board.getId();
+        return "redirect:/board/read?id=" + board.getId();
     }
 
     @PostMapping("/delete")
-    public String postDelete(Integer id){
+    public String postDelete(Integer id) {
         service.deleteBoard(id);
 
         return "redirect:/board/list";

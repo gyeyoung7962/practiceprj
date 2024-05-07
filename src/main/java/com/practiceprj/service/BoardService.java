@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -39,5 +40,54 @@ public class BoardService {
     public void deleteBoard(Integer id) {
 
         mapper.deleteBoard(id);
+    }
+
+    public Map<String, Object> listBoardPaging(Integer page) {
+
+        int offSet = (page - 1) * 10; //페이지마다 게시글 번호 1p -> 1 ~10
+
+        int totalCount = mapper.totalCount(); //게시글 총개수
+
+        int totalEndPage = totalCount % 10 == 0 ? totalCount/10 : totalCount / 10 +1; //총 게시글의 개수
+
+        //5페이지 보고있으면 끝페이지는 10페이지나와야함
+        //5-1
+        int currentEndPage = (((page -1)/10)+1)*10;
+        int currentStartPage = currentEndPage - 9;
+
+        //총페이지가 47 페이지 현재 끝페이지 50
+        if(totalEndPage  < currentEndPage){
+            currentEndPage = totalEndPage;
+        }
+
+        boolean prevPage = page > 1 ? true : false;
+        boolean nextPage = currentEndPage < totalEndPage ? true : false;
+
+        int prevPageNumber = currentStartPage - 10;
+        int nextPageNumber = currentStartPage + 10;
+
+
+
+
+        return Map.of("list", mapper.listBoardPaging(offSet),
+                        "pageInfo", Map.of(
+                                                "currentPage", page,
+                                                "totalEndPage", totalEndPage,
+                                                "currentStartPage", currentStartPage,
+                                                "currentEndPage", currentEndPage,
+                                                "prevPage", prevPage,
+                                                "nextPage", nextPage,
+                                                "prevPageNumber", prevPageNumber,
+                                                "nextPageNumber", nextPageNumber
+
+
+
+
+                )
+
+
+
+        );
+
     }
 }

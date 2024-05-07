@@ -9,6 +9,11 @@
           integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
+<style>
+    .active{
+        background-color: forestgreen;
+    }
+</style>
 <body>
 <c:import url="../layout/navbar.jsp"></c:import>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
@@ -33,5 +38,29 @@
     </c:forEach>
     </tbody>
 </table>
+
+<c:if test="${pageInfo.prevPage}">
+    <c:url var="link" value="/board/list">
+        <c:param name="page" value="${pageInfo.prevPageNumber}"/>
+    </c:url>
+<a href="${link}">이전</a>
+</c:if>
+
+<ul>
+<c:forEach begin="${pageInfo.currentStartPage}" end="${pageInfo.currentEndPage}" var="page">
+    <c:url var="link" value="/board/list">
+        <c:param name="page" value="${page}"/>
+    </c:url>
+    <a href="${link}" class="${pageInfo.currentPage eq page ? 'active': ''}">${page}</a>
+</c:forEach>
+</ul>
+
+<c:if test="${pageInfo.nextPage}">
+    <c:url var="link" value="/board/list">
+        <c:param name="page" value="${pageInfo.nextPageNumber}"/>
+    </c:url>
+    <a href="${link}">다음</a>
+</c:if>
+
 </body>
 </html>
