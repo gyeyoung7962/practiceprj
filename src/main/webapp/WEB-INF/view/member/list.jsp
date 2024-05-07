@@ -37,8 +37,12 @@
         <td>${list.nickName}</td>
         <td>${list.regDate}</td>
         <td>
-            <button>수정</button>
+            <button><a href="/member/modify?id=${list.id}">수정</a></button>
+
+            <form action="/member/delete" method="post" onsubmit="confirm('삭제하시겠습니까?')">
+                <input type="hidden" name="id" value="${list.id}">
             <button>삭제</button>
+            </form>
         </td>
     </tr>
 

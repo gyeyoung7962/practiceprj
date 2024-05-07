@@ -2,9 +2,7 @@ package com.practiceprj.mapper;
 
 
 import com.practiceprj.domain.Member;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -29,4 +27,18 @@ public interface MemberMapper {
             where id = #{id}
             """)
     Member selectMember(Integer id);
+
+    @Update("""
+            update Member
+            set password = #{password}, nick_name = #{nickName}
+            where id = #{id}
+            """)
+    void modifyMember(Member member);
+
+    @Delete("""
+            delete from Member
+            where id = #{id}
+            """)
+    void deleteMember(Integer id);
+
 }

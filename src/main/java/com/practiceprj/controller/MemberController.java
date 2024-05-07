@@ -51,4 +51,28 @@ public class MemberController {
 
         model.addAttribute("member", member);
     }
+
+    @GetMapping("/modify")
+    public void getModify(Integer id, Model model){
+        Member member = memberService.selectMember(id);
+
+        model.addAttribute("member", member);
+    }
+
+    @PostMapping("/modify")
+    public String postModify(Member member, Model model){
+        memberService.modifyMember(member);
+
+        return "redirect:/member/list";
+    }
+
+    @PostMapping("/delete")
+    public String postDelete(Integer id){
+        memberService.deleteMember(id);
+
+        return "redirect:/member/list";
+    }
+
+
+
 }
