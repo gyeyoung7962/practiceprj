@@ -32,7 +32,7 @@ public class BoardController {
 
         rttr.addFlashAttribute("msg", "가입완료");
 
-        return "redirect:/board/write";
+        return "redirect:/board/list";
     }
 
     @GetMapping("/list")
@@ -42,4 +42,37 @@ public class BoardController {
 
         model.addAttribute("list", list);
     }
+
+    @GetMapping("/read")
+    public String read(Integer id, Model model){
+
+        Board board = service.readBoard(id);
+
+        model.addAttribute("board", board);
+
+        return "board/read";
+    }
+
+    @GetMapping("/modify")
+    public void getModify(Integer id, Model model){
+        Board board = service.readBoard(id);
+
+        model.addAttribute("board", board);
+    }
+
+    @PostMapping("/modify")
+    public String postModify(Board board){
+
+        service.updateBoard(board);
+
+        return "redirect:/board/read?id="+board.getId();
+    }
+
+    @PostMapping("/delete")
+    public String postDelete(Integer id){
+        service.deleteBoard(id);
+
+        return "redirect:/board/list";
+    }
 }
+

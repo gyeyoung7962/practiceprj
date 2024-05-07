@@ -27,3 +27,4 @@ create table board
 );
 
 desc board;
+drop table board;

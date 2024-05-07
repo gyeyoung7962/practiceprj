@@ -15,23 +15,20 @@
         integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<table class="table">
-    <thead>
-    <th>번호</th>
-    <th>글제목</th>
-    <th>작성자</th>
-    <th>작성일</th>
-    </thead>
-    <tbody>
-    <c:forEach items="${list}" var="list">
-        <tr>
-            <td>${list.id}</td>
-            <td><a href="/board/read?id=${list.id}">${list.title}</a></td>
-            <td>${list.writer}</td>
-            <td>${list.regDate}</td>
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
+<h3>${board.id}번 글</h3>
+<hr/>
+글제목:${board.title}<br/>
+글내용<br/>
+<textarea cols="30" rows="10" readonly>${board.content}</textarea><br/>
+글작성자:${board.writer}<br/>
+글작성일:${board.regDate}<br/>
+
+<button><a href="/board/modify?id=${board.id}">수정</a></button>
+
+<form action="/board/delete" method="post">
+    <input type="hidden" name="id" value="${board.id}">
+<button>삭제</button>
+</form>
+
 </body>
 </html>
