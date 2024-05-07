@@ -9,28 +9,29 @@
           integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
-<style>
-    li{
-        margin: 20px;
-        padding : 10px;
-        list-style: none;
-        text-decoration: none;
-    }
-</style>
 <body>
-<div>
-    <ul style="display: flex; justify-content: center">
-        <li><a href="/member/join">회원가입</a></li>
-        <li><a href="/board/write">글쓰기</a></li>
-        <li><a href="/member/list">회원목록</a></li>
-        <li><a href="/board/list">글목록</a></li>
-    </ul>
-</div>
-
-
-
+<c:import url="../layout/navbar.jsp"></c:import>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
         integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<table class="table">
+    <thead>
+    <th>번호</th>
+    <th>글제목</th>
+    <th>작성자</th>
+    <th>작성일</th>
+    </thead>
+    <tbody>
+    <c:forEach items="${list}" var="list">
+        <tr>
+            <td>${list.id}</td>
+            <td>${list.title}</td>
+            <td>${list.writer}</td>
+            <td>${list.regDate}</td>
+        </tr>
+    </c:forEach>
+    </tbody>
+</table>
 </body>
 </html>
