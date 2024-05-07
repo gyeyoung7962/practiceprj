@@ -1,0 +1,54 @@
+package com.practiceprj.controller;
+
+import com.practiceprj.domain.Member;
+import com.practiceprj.service.Service;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
+
+@Controller
+@RequestMapping("/member")
+@RequiredArgsConstructor
+public class MemberController {
+
+    private final Service memberService;
+
+    @GetMapping("/join")
+    public void getJoin(){
+
+    }
+
+    @PostMapping("/join")
+    public String postJoin(Member member, RedirectAttributes rttr){
+
+        System.out.println("member = " + member);
+
+
+        memberService.join(member);
+
+        rttr.addFlashAttribute("msg", "가입성공");
+
+        return "redirect:/member/join";
+    }
+
+    @GetMapping("/list")
+    public void getList(Model model){
+
+        List<Member> list =  memberService.listMember();
+
+        model.addAttribute("list", list);
+    }
+
+    @GetMapping("/select")
+    public void getSelect(Integer id, Model model){
+        Member member =  memberService.selectMember(id);
+
+        model.addAttribute("member", member);
+    }
+}
