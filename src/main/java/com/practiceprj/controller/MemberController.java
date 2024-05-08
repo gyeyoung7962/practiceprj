@@ -1,7 +1,7 @@
 package com.practiceprj.controller;
 
 import com.practiceprj.domain.Member;
-import com.practiceprj.service.Service;
+import com.practiceprj.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberController {
 
-    private final Service memberService;
+    private final MemberService memberService;
 
     @GetMapping("/join")
     public void getJoin(){
@@ -71,6 +71,11 @@ public class MemberController {
         memberService.deleteMember(id);
 
         return "redirect:/member/list";
+    }
+
+    @GetMapping("/login")
+    public void getLogin(){
+
     }
 
 

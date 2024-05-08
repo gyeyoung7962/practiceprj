@@ -28,3 +28,26 @@ create table board
 
 desc board;
 drop table board;
+
+
+desc Member;
+
+create table Authority
+(
+
+    id        int auto_increment primary key,
+    member_id int         not null references Member (id),
+    name      varchar(10) not null
+);
+
+desc Authority;
+
+select *
+from Member
+where nick_name = 'admin';
+
+insert into Authority(member_id, name)
+values (6, 'admin');
+
+select *
+from Authority;

@@ -10,22 +10,24 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
+
+<c:import url="../layout/navbar.jsp"></c:import>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
         integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<c:import url="../layout/navbar.jsp"></c:import>
-
-<h3>회원가입</h3>
+<div style="position: absolute; top:50%; left:50%; transform: translate(-50%,-50%);">
+<h3>시큐리티 로그인</h3>
 <hr/>
-<form action="" method="post" onsubmit="confirm('가입하시겠습니까?')">
-    이메일:<input type="email" name="email"><br>
-    비밀번호:<input type="password" name="password"><br/>
-    닉네임:<input type="text" name="nickName"><br/>
+
+<form action="/member/login" method="post">
+    이메일:<input type="email" name="username"><br/>
+    비밀번호:<input type="password" name="password"/><br/>
 
     <button>확인</button>
     <button>취소</button>
 </form>
-<p>${msg}</p>
+
+</div>
 </body>
 </html>

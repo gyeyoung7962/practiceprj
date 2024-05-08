@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -10,9 +11,9 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <style>
-    li{
+    li {
         margin: 20px;
-        padding : 10px;
+        padding: 10px;
         list-style: none;
         text-decoration: none;
     }
@@ -20,13 +21,36 @@
 <body>
 <div>
     <ul style="display: flex; justify-content: center">
-        <li><a href="/member/join">회원가입</a></li>
-        <li><a href="/board/write">글쓰기</a></li>
-        <li><a href="/member/list">회원목록</a></li>
-        <li><a href="/board/list">글목록</a></li>
+        <sec:authorize access="isAnonymous()">
+            <li>
+                <a href="/member/join">회원가입</a>
+            </li>
+            <li>
+                <a href="/member/login">로그인</a>
+            </li>
+        </sec:authorize>
+        <li>
+            <a href="/board/write">글쓰기</a>
+        </li>
+        <li>
+            <a href="/member/list">회원목록</a>
+        </li>
+        <li>
+            <a href="/board/list">글목록</a>
+        </li>
+
+
+        <sec:authorize access="isAuthenticated()">
+            <sec:authentication property="principal.member" var="member"/>
+            <li>${member.nickName}</li>
+            <li>
+                <a href="/logout">로그아웃</a>
+            </li>
+
+
+        </sec:authorize>
     </ul>
 </div>
-
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
