@@ -10,7 +10,7 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <style>
-    .active{
+    .active {
         background-color: forestgreen;
     }
 </style>
@@ -31,7 +31,9 @@
     <c:forEach items="${list}" var="list">
         <tr>
             <td>${list.id}</td>
-            <td><a href="/board/read?id=${list.id}">${list.title}</a></td>
+            <td>
+                <a href="/board/read?id=${list.id}">${list.title}</a>
+            </td>
             <td>${list.writer}</td>
             <td>${list.regDate}</td>
         </tr>
@@ -43,16 +45,16 @@
     <c:url var="link" value="/board/list">
         <c:param name="page" value="${pageInfo.prevPageNumber}"/>
     </c:url>
-<a href="${link}">이전</a>
+    <a href="${link}">이전</a>
 </c:if>
 
 <ul>
-<c:forEach begin="${pageInfo.currentStartPage}" end="${pageInfo.currentEndPage}" var="page">
-    <c:url var="link" value="/board/list">
-        <c:param name="page" value="${page}"/>
-    </c:url>
-    <a href="${link}" class="${pageInfo.currentPage eq page ? 'active': ''}">${page}</a>
-</c:forEach>
+    <c:forEach begin="${pageInfo.currentStartPage}" end="${pageInfo.currentEndPage}" var="page">
+        <c:url var="link" value="/board/list">
+            <c:param name="page" value="${page}"/>
+        </c:url>
+        <a href="${link}" class="${pageInfo.currentPage eq page ? 'active': ''}">${page}</a>
+    </c:forEach>
 </ul>
 
 <c:if test="${pageInfo.nextPage}">

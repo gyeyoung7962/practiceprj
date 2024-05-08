@@ -4,16 +4,14 @@ package com.practiceprj.controller;
 import com.practiceprj.domain.Board;
 import com.practiceprj.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/board")
@@ -22,17 +20,22 @@ public class BoardController {
 
     private final BoardService service;
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/write")
     public void getWrite() {
 
     }
 
     @PostMapping("/write")
-    public String postWrite(Board board, RedirectAttributes rttr) {
+    public String postWrite(Board board, Authentication authentication) {
 
-        service.writeBoard(board);
+        if (authentication == null) {
 
-        rttr.addFlashAttribute("msg", "가입완료");
+            return "redirect:/member/login";
+        }
+
+        service.writeBoard(board, authentication);
+
 
         return "redirect:/board/list";
     }
@@ -46,6 +49,7 @@ public class BoardController {
 //        List<Board> list = service.listBoard();
 //
 //        model.addAttribute("list", list);
+
 
         model.addAllAttributes(service.listBoardPaging(page));
     }
@@ -68,16 +72,22 @@ public class BoardController {
     }
 
     @PostMapping("/modify")
-    public String postModify(Board board) {
+    public String postModify(Board board, Authentication authentication) {
 
-        service.updateBoard(board);
+        if (service.access(board.getId(), authentication)) {
+            service.updateBoard(board);
+        }
+
 
         return "redirect:/board/read?id=" + board.getId();
     }
 
     @PostMapping("/delete")
-    public String postDelete(Integer id) {
-        service.deleteBoard(id);
+    public String postDelete(Integer id, Authentication authentication) {
+
+        if (service.access(id, authentication)) {
+            service.deleteBoard(id);
+        }
 
         return "redirect:/board/list";
     }

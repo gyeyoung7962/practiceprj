@@ -10,10 +10,9 @@ import java.util.List;
 public interface BoardMapper {
 
 
-
     @Insert("""
-            insert into board(title, content, writer)
-            values(#{title}, #{content}, #{writer})
+            insert into board(title, content, member_id)
+            values(#{title}, #{content}, #{memberId})
             """)
     void writeBoard(Board board);
 
@@ -25,9 +24,11 @@ public interface BoardMapper {
     List<Board> listBoard();
 
     @Select("""
-            select *
-            from board
-            where id = #{id}
+            select b.id, b.title, b.content, m.nick_name writer, b.regDate, b.member_id, m.id
+            from board b
+                     join Member m
+                          on b.member_id = m.id
+            where b.id = #{id};
             """)
     Board readBoard(Integer id);
 
@@ -46,10 +47,12 @@ public interface BoardMapper {
     void deleteBoard(Integer id);
 
     @Select("""
-            select *
-            from board
-            order by id desc
-            limit #{offSet} , 10
+                        
+            select b.id, b.title, m.nick_name writer, b.regDate
+            from board b join Member m
+            on b.member_id = m.id
+            order by b.id desc
+            limit #{offSet}, 10
             """)
     List<Board> listBoardPaging(int offSet);
 

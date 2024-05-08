@@ -19,9 +19,13 @@
 <h3>글작성</h3>
 <hr/>
 <form action="" method="post">
-    제목:<input type="text" name="title"><br/>
-    내용:<textarea name="content"></textarea><br/>
-    작성자:<input type="text" name="writer"><br/>
+    제목:
+    <input type="text" name="title">
+    <br/>
+    내용:
+    <textarea name="content"></textarea>
+    <br/>
+    <%--    작성자:<input type="text" name="writer"><br/>--%>
 
     <button>확인</button>
     <button>취소</button>

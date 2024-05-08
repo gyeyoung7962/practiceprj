@@ -13,5 +13,5 @@ public class Board {
     private String writer;
     private LocalDateTime regDate;
 
-
+    private Integer memberId;
 }

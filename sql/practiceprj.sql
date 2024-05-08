@@ -29,7 +29,6 @@ create table board
 desc board;
 drop table board;
 
-
 desc Member;
 
 create table Authority
@@ -57,3 +56,47 @@ from Authority;
 select *
 from Authority
 where member_id = 6;
+
+
+desc board;
+
+alter table board
+    add column member_id int references Member (id);
+
+desc Member;
+
+select *
+from board
+order by id desc;
+
+
+
+alter table board
+    drop column writer;
+
+select b.title, b.content, m.nick_name as writer
+from board b
+         join Member m
+              on b.member_id = m.id;
+
+select *
+from board
+order by id desc;
+
+select b.id, b.title, m.nick_name as writer, b.regDate
+from board b
+         left join Member m
+                   on b.member_id = m.id
+
+order by b.id desc;
+
+select *
+from board
+where id = 316;
+
+select b.title, b.content, m.nick_name, b.regDate
+from board b
+         join Member m
+              on b.member_id = m.id
+where b.id = 316;
+

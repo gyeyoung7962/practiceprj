@@ -26,7 +26,7 @@ public class CustomUserService implements UserDetailsService {
         Member member = service.selectInfoByEmail(username);
 
         List<String> authorities = service.getAuthoritiesById(member.getId());
-        System.out.println(authorities);
+//        System.out.println(authorities);
 
         member.setAuthorities(authorities);
 

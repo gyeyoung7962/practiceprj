@@ -40,7 +40,7 @@ public class MemberController {
 
 
     @GetMapping("/list")
-    @PreAuthorize("hasAuthority('admin')")
+    @PreAuthorize("hasAnyAuthority('admin')")
     public void getList(Model model) {
 
         List<Member> list = memberService.listMember();
