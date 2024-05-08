@@ -51,3 +51,9 @@ values (6, 'admin');
 
 select *
 from Authority;
+
+
+
+select *
+from Authority
+where member_id = 6;

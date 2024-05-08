@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 
 @Component
 @RequiredArgsConstructor
@@ -23,6 +25,10 @@ public class CustomUserService implements UserDetailsService {
 
         Member member = service.selectInfoByEmail(username);
 
+        List<String> authorities = service.getAuthoritiesById(member.getId());
+        System.out.println(authorities);
+
+        member.setAuthorities(authorities);
 
         return new CustomUser(member);
 

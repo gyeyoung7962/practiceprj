@@ -18,7 +18,6 @@ public class MemberService {
     private final MemberMapper mapper;
 
 
-
     public void join(Member member) {
 
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -50,8 +49,13 @@ public class MemberService {
         mapper.deleteMember(id);
     }
 
-    public Member selectInfoByEmail(String email){
+    public Member selectInfoByEmail(String email) {
 
         return mapper.selectInfoByEmail(email);
+    }
+
+    public List<String> getAuthoritiesById(Integer id) {
+
+        return mapper.getAuthoritiesById(id);
     }
 }

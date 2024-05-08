@@ -19,7 +19,7 @@ public class SecurityConfig {
         http.formLogin((formLogin) -> {
                     formLogin.loginPage("/member/login");
 
-                    formLogin.defaultSuccessUrl("/member/list");
+//                    formLogin.defaultSuccessUrl("/member/list"); //로그인시 원하는곳으로 이동
                 }
         );
         return http.build();
